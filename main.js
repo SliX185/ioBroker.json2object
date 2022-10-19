@@ -157,14 +157,19 @@ class Json2object extends utils.Adapter {
 		if (state) {
 			// The state was changed
 			this.log.debug(`state ${id} changed: ${state.val} (ack = ${state.ack})`);
+			/*
 			if (state.ack) {
 				return;
 			}
+			*/
 			const device = id.split(".").pop();
 			this.log.debug(`device: ${device}`);
 			if (this.listOfNodes?.includes(id)) {
 				this.createObjectAndState(id, String(state.val));
 			} else {
+				if (state.ack) {
+					return;
+				}
 				const jsonKey = id.split(".").pop();
 				let foreignKey = id.replace(`${this.name}.0.`, "").replace("." + jsonKey, "");
 				this.log.info(`foreignKey: ${foreignKey}, jsonKey: ${jsonKey}, value: ${state.val}`);
@@ -186,7 +191,7 @@ class Json2object extends utils.Adapter {
 						native: {},
 					});
 				}
-				this.setForeignState(foreignKey, { val: JSON.stringify(obj), ack: true });
+				this.setForeignState(foreignKey, { val: JSON.stringify(obj), ack: false });
 			}
 		} else {
 			this.log.info(`state ${id} deleted`);
