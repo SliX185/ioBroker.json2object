@@ -2,14 +2,14 @@
 	"i18n": true,
 	"type": "panel",
 	"items": {
-		"option1": {
-			"type": "checkbox",
-			"label": "option1",
+		"inputKeys": {
+			"type": "text",
+			"label": "input keys",
 			"newLine": true
 		},
-		"option2": {
+		"outSuffix": {
 			"type": "text",
-			"label": "option2",
+			"label": "suffix for writing json data",
 			"newLine": true
 		}
 	}

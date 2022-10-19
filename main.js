@@ -35,53 +35,51 @@ class Json2object extends utils.Adapter {
 
 		// The adapters config (in the instance object everything under the attribute "native") is accessible via
 		// this.config:
-		this.log.info("config option1: " + this.config.option1);
-		this.log.info("config option2: " + this.config.option2);
+		this.log.debug("config option1: " + this.config.inputKeys);
+		this.log.debug("config option2: " + this.config.outSuffix);
 
-		/*
-		For every state in the system there has to be also an object of type state
-		Here a simple template for a boolean variable named "testVariable"
-		Because every adapter instance uses its own unique namespace variable names can't collide with other adapters variables
-		*/
-		await this.setObjectNotExistsAsync("testVariable", {
-			type: "state",
-			common: {
-				name: "testVariable",
-				type: "boolean",
-				role: "indicator",
-				read: true,
-				write: true,
-			},
-			native: {},
-		});
+		this.listOfNodes = this.config.inputKeys.split(",");
 
-		// In order to get state updates, you need to subscribe to them. The following line adds a subscription for our variable we have created above.
-		this.subscribeStates("testVariable");
 		// You can also add a subscription for multiple states. The following line watches all states starting with "lights."
-		// this.subscribeStates("lights.*");
+		for (const node of this.listOfNodes) {
+			if (node) {
+				this.log.debug(`subscripe to ${node}`);
+				this.subscribeForeignStates(node);
+				this.getForeignState(node, (err, state) => {
+					if (err) {
+						this.log.warn("error getting state");
+					} else {
+						this.log.debug("get state: " + state?.val);
+						if (state?.val) {
+							this.createObjectAndState(node, String(state.val));
+						}
+					}
+				});
+			}
+		}
 		// Or, if you really must, you can also watch all states. Don't do this if you don't need to. Otherwise this will cause a lot of unnecessary load on the system:
-		// this.subscribeStates("*");
+		this.subscribeStates("*");
 
 		/*
 			setState examples
 			you will notice that each setState will cause the stateChange event to fire (because of above subscribeStates cmd)
 		*/
 		// the variable testVariable is set to true as command (ack=false)
-		await this.setStateAsync("testVariable", true);
+		//	await this.setStateAsync("testVariable", true);
 
 		// same thing, but the value is flagged "ack"
 		// ack should be always set to true if the value is received from or acknowledged from the target system
-		await this.setStateAsync("testVariable", { val: true, ack: true });
+		//	await this.setStateAsync("testVariable", { val: true, ack: true });
 
 		// same thing, but the state is deleted after 30s (getState will return null afterwards)
-		await this.setStateAsync("testVariable", { val: true, ack: true, expire: 30 });
+		//	await this.setStateAsync("testVariable", { val: true, ack: true, expire: 30 });
 
 		// examples for the checkPassword/checkGroup functions
-		let result = await this.checkPasswordAsync("admin", "iobroker");
-		this.log.info("check user admin pw iobroker: " + result);
+		//	let result = await this.checkPasswordAsync("admin", "iobroker");
+		//	this.log.info("check user admin pw iobroker: " + result);
 
-		result = await this.checkGroupAsync("admin", "admin");
-		this.log.info("check group user admin group admin: " + result);
+		//	result = await this.checkGroupAsync("admin", "admin");
+		//	this.log.info("check group user admin group admin: " + result);
 	}
 
 	/**
@@ -118,7 +116,38 @@ class Json2object extends utils.Adapter {
 	// 		this.log.info(`object ${id} deleted`);
 	// 	}
 	// }
+	//  (err?: Error | null, obj?: { id: string })
 
+	/**
+	 * Is called if a subscribed state changes
+	 * @param {string} id
+	 * @param {string} val
+	 */
+	createObjectAndState(id, val) {
+		let obj;
+		try {
+			obj = JSON.parse(val);
+		} catch (e) {
+			this.log.warn(`invalid json format on: ${id} detected`);
+			return;
+		}
+		for (const [key, value] of Object.entries(obj)) {
+			this.log.debug(`create object for: ` + key);
+			this.setObjectNotExists(id + "." + key, {
+				type: "state",
+				common: {
+					name: key,
+					type: "string",
+					role: "state",
+					read: true,
+					write: true,
+				},
+				native: {},
+			});
+			this.log.debug(`set Object ${key} to: ${value}`);
+			this.setState(id + "." + key, { val: value, ack: true });
+		}
+	}
 	/**
 	 * Is called if a subscribed state changes
 	 * @param {string} id
@@ -127,30 +156,42 @@ class Json2object extends utils.Adapter {
 	onStateChange(id, state) {
 		if (state) {
 			// The state was changed
-			this.log.info(`state ${id} changed: ${state.val} (ack = ${state.ack})`);
+			this.log.debug(`state ${id} changed: ${state.val} (ack = ${state.ack})`);
+			if (state.ack) {
+				return;
+			}
+			const device = id.split(".").pop();
+			this.log.debug(`device: ${device}`);
+			if (this.listOfNodes?.includes(id)) {
+				this.createObjectAndState(id, String(state.val));
+			} else {
+				const jsonKey = id.split(".").pop();
+				let foreignKey = id.replace(`${this.name}.0.`, "").replace("." + jsonKey, "");
+				this.log.info(`foreignKey: ${foreignKey}, jsonKey: ${jsonKey}, value: ${state.val}`);
+				const obj = {
+					[String(jsonKey)]: state.val,
+				};
+				this.log.info(`created object: ${JSON.stringify(obj)}`);
+				if (this.config.outSuffix) {
+					foreignKey = foreignKey + "." + this.config.outSuffix;
+					this.setForeignObjectNotExists(foreignKey, {
+						type: "state",
+						common: {
+							name: this.config.outSuffix,
+							type: "string",
+							role: "state",
+							read: false,
+							write: true,
+						},
+						native: {},
+					});
+				}
+				this.setForeignState(foreignKey, { val: JSON.stringify(obj), ack: true });
+			}
 		} else {
-			// The state was deleted
 			this.log.info(`state ${id} deleted`);
 		}
 	}
-
-	// If you need to accept messages in your adapter, uncomment the following block and the corresponding line in the constructor.
-	// /**
-	//  * Some message was sent to this instance over message box. Used by email, pushover, text2speech, ...
-	//  * Using this method requires "common.messagebox" property to be set to true in io-package.json
-	//  * @param {ioBroker.Message} obj
-	//  */
-	// onMessage(obj) {
-	// 	if (typeof obj === "object" && obj.message) {
-	// 		if (obj.command === "send") {
-	// 			// e.g. send email or pushover or whatever
-	// 			this.log.info("send command");
-
-	// 			// Send response in callback if required
-	// 			if (obj.callback) this.sendTo(obj.from, obj.command, "Message received", obj.callback);
-	// 		}
-	// 	}
-	// }
 }
 
 if (require.main !== module) {

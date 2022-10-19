@@ -71,8 +71,8 @@
 		]
 	},
 	"native": {
-		"option1": true,
-		"option2": "42"
+		"inputKeys": "",
+		"outSuffix": "set"
 	},
 	"objects": [],
 	"instanceObjects": []
