@@ -116,8 +116,34 @@ class Json2object extends utils.Adapter {
 	// 		this.log.info(`object ${id} deleted`);
 	// 	}
 	// }
-	//  (err?: Error | null, obj?: { id: string })
 
+	/*'number' | 'string' | 'boolean' | 'array' | 'object' | 'mixed' | 'file'
+	//  (err?: Error | null, obj?: { id: string })
+	/**
+	 * converts the value to the corresponding type
+	 * @param {string | number | boolean | null} val
+	 * @returns {'number' | 'string' | 'boolean' | 'array' | 'object' | 'mixed' | 'file'} the convertet value
+	 */
+	convertType(val) {
+		this.log.debug("type of " + typeof val);
+		switch (typeof val) {
+			case "string":
+				return "string";
+			case "bigint":
+			case "number":
+				return "number";
+			case "boolean":
+				return "boolean";
+			case "array":
+				return "array";
+			case "object":
+				return "object";
+			case "file":
+				return "file";
+			default:
+				return "mixed";
+		}
+	}
 	/**
 	 * Is called if a subscribed state changes
 	 * @param {string} id
@@ -137,10 +163,10 @@ class Json2object extends utils.Adapter {
 				type: "state",
 				common: {
 					name: key,
-					type: "string",
 					role: "state",
 					read: true,
 					write: true,
+					type: this.convertType(value),
 				},
 				native: {},
 			});
@@ -164,9 +190,10 @@ class Json2object extends utils.Adapter {
 			*/
 			const device = id.split(".").pop();
 			this.log.debug(`device: ${device}`);
-			if (this.listOfNodes?.includes(id)) {
+			if (this.listOfNodes?.includes(id) && state?.val) {
 				this.createObjectAndState(id, String(state.val));
 			} else {
+				/* if ack is true, the change cames from our self */
 				if (state.ack) {
 					return;
 				}
