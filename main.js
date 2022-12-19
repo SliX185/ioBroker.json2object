@@ -25,6 +25,7 @@ class Json2object extends utils.Adapter {
 		// this.on("objectChange", this.onObjectChange.bind(this));
 		// this.on("message", this.onMessage.bind(this));
 		this.on("unload", this.onUnload.bind(this));
+		this.listOfNodes = [];
 	}
 
 	/**
@@ -35,51 +36,31 @@ class Json2object extends utils.Adapter {
 
 		// The adapters config (in the instance object everything under the attribute "native") is accessible via
 		// this.config:
-		this.log.debug("config option1: " + this.config.inputKeys);
+		this.log.debug("config option1: ");
+		this.log.debug(typeof this.config.inputKeys);
 		this.log.debug("config option2: " + this.config.outSuffix);
 
-		this.listOfNodes = this.config.inputKeys.split(",");
-
-		// You can also add a subscription for multiple states. The following line watches all states starting with "lights."
-		for (const node of this.listOfNodes) {
-			if (node) {
-				this.log.debug(`subscripe to ${node}`);
-				this.subscribeForeignStates(node);
-				this.getForeignState(node, (err, state) => {
+		// Verarbeitung der Werte der Tabelle
+		this.config.inputKeys.forEach((value) => {
+			this.log.debug(value.name);
+			if (value.name) {
+				this.listOfNodes.push(value.name);
+				this.log.debug(`subscripe to ${value.name}`);
+				this.subscribeForeignStates(value.name);
+				this.getForeignState(value.name, (err, state) => {
 					if (err) {
 						this.log.warn("error getting state");
 					} else {
 						this.log.debug("get state: " + state?.val);
 						if (state?.val) {
-							this.createObjectAndState(node, String(state.val));
+							this.createObjectAndState(value.name, String(state.val));
 						}
 					}
 				});
 			}
-		}
-		// Or, if you really must, you can also watch all states. Don't do this if you don't need to. Otherwise this will cause a lot of unnecessary load on the system:
+		});
+		/* subscripe to internal states */
 		this.subscribeStates("*");
-
-		/*
-			setState examples
-			you will notice that each setState will cause the stateChange event to fire (because of above subscribeStates cmd)
-		*/
-		// the variable testVariable is set to true as command (ack=false)
-		//	await this.setStateAsync("testVariable", true);
-
-		// same thing, but the value is flagged "ack"
-		// ack should be always set to true if the value is received from or acknowledged from the target system
-		//	await this.setStateAsync("testVariable", { val: true, ack: true });
-
-		// same thing, but the state is deleted after 30s (getState will return null afterwards)
-		//	await this.setStateAsync("testVariable", { val: true, ack: true, expire: 30 });
-
-		// examples for the checkPassword/checkGroup functions
-		//	let result = await this.checkPasswordAsync("admin", "iobroker");
-		//	this.log.info("check user admin pw iobroker: " + result);
-
-		//	result = await this.checkGroupAsync("admin", "admin");
-		//	this.log.info("check group user admin group admin: " + result);
 	}
 
 	/**
@@ -154,7 +135,7 @@ class Json2object extends utils.Adapter {
 		try {
 			obj = JSON.parse(val);
 		} catch (e) {
-			this.log.warn(`invalid json format on: ${id} detected`);
+			this.log.warn(`invalid json format on: ${id} detected: ` + val);
 			return;
 		}
 		for (const [key, value] of Object.entries(obj)) {
@@ -171,7 +152,10 @@ class Json2object extends utils.Adapter {
 				native: {},
 			});
 			this.log.debug(`set Object ${key} to: ${value}`);
-			this.setState(id + "." + key, { val: value, ack: true });
+			this.setState(id + "." + key, {
+				val: typeof value === "object" ? JSON.stringify(value) : value,
+				ack: true,
+			});
 		}
 	}
 	/**

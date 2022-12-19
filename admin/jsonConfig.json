@@ -3,8 +3,20 @@
 	"type": "panel",
 	"items": {
 		"inputKeys": {
-			"type": "text",
-			"label": "input keys",
+			"type": "table",
+			"label": "Object-IDs which contains JSON-Strings",
+			"sm": 12,
+			"md": 12,
+			"lg": 12,
+			"items": [
+				{
+					"type": "objectId",
+					"width": "100%",
+					"title": "Object-ID",
+					"attr": "name",
+					"default": ""
+				}
+			],
 			"newLine": true
 		},
 		"outSuffix": {
