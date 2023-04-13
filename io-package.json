@@ -71,6 +71,7 @@
 		]
 	},
 	"native": {
+		"inputKeys": [],
 		"outSuffix": "set"
 	},
 	"objects": [],

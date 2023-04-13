@@ -36,12 +36,9 @@ class Json2object extends utils.Adapter {
 
 		// The adapters config (in the instance object everything under the attribute "native") is accessible via
 		// this.config:
-		this.log.debug("config option1: ");
-		this.log.debug(typeof this.config.inputKeys);
-		this.log.debug("config option2: " + this.config.outSuffix);
-
-		// Verarbeitung der Werte der Tabelle
-		this.config.inputKeys.forEach((value) => {
+		this.log.debug("loading config ...");
+		// read input keys and subscribe
+		this.config.inputKeys?.forEach((value) => {
 			this.log.debug(value.name);
 			if (value.name) {
 				this.listOfNodes.push(value.name);
@@ -53,6 +50,7 @@ class Json2object extends utils.Adapter {
 					} else {
 						this.log.debug("get state: " + state?.val);
 						if (state?.val) {
+							//this.initObjectPath(value.name);
 							this.createObjectAndState(value.name, String(state.val));
 						}
 					}
@@ -126,7 +124,37 @@ class Json2object extends utils.Adapter {
 		}
 	}
 	/**
-	 * Is called if a subscribed state changes
+	 * Is called to initialize the objects for id
+	 */
+	initObjectPath(id) {
+		const completeKey = `${this.name}.0.` + id;
+		/*
+		this.log.debug(`create object for: ` + completeKey);
+		this.extendForeignObjectAsync(completeKey, {
+			type: "folder",
+			common: {
+				name: completeKey,
+				role: "",
+			},
+			native: {},
+		});
+		*/
+		let currentPath = "";
+		for (const part of completeKey.split(".")) {
+			currentPath = currentPath ? currentPath + "." + part : part;
+			this.log.debug(`init object for: ` + currentPath);
+			this.setObject(currentPath, {
+				type: "folder",
+				common: {
+					name: part,
+					role: "",
+				},
+				native: {},
+			});
+		}
+	}
+	/**
+	 * Is called if to create and set the state
 	 * @param {string} id
 	 * @param {string} val
 	 */
@@ -139,23 +167,27 @@ class Json2object extends utils.Adapter {
 			return;
 		}
 		for (const [key, value] of Object.entries(obj)) {
-			this.log.debug(`create object for: ` + key);
-			this.setObjectNotExists(id + "." + key, {
-				type: "state",
-				common: {
-					name: key,
-					role: "state",
-					read: true,
-					write: true,
-					type: this.convertType(value),
+			const completeKey = `${this.name}.0.` + id;
+			this.log.debug(`create object for: ` + completeKey + "." + key);
+			this.setObject(
+				completeKey + "." + key,
+				{
+					type: "state",
+					common: {
+						name: key,
+						role: "state",
+						read: true,
+						write: true,
+						type: this.convertType(value),
+					},
+					native: {},
 				},
-				native: {},
-			});
-			this.log.debug(`set Object ${key} to: ${value}`);
-			this.setState(id + "." + key, {
-				val: typeof value === "object" ? JSON.stringify(value) : value,
-				ack: true,
-			});
+				() =>
+					this.setState(id + "." + key, {
+						val: typeof value === "object" ? JSON.stringify(value) : value,
+						ack: true,
+					}),
+			);
 		}
 	}
 	/**
@@ -183,29 +215,34 @@ class Json2object extends utils.Adapter {
 				}
 				const jsonKey = id.split(".").pop();
 				let foreignKey = id.replace(`${this.name}.0.`, "").replace("." + jsonKey, "");
-				this.log.info(`foreignKey: ${foreignKey}, jsonKey: ${jsonKey}, value: ${state.val}`);
+				this.log.debug(`foreignKey: ${foreignKey}, jsonKey: ${jsonKey}, value: ${state.val}`);
 				const obj = {
 					[String(jsonKey)]: state.val,
 				};
-				this.log.info(`created object: ${JSON.stringify(obj)}`);
+				this.log.debug(`create and set object for: ${JSON.stringify(obj)} with key ${foreignKey}`);
 				if (this.config.outSuffix) {
 					foreignKey = foreignKey + "." + this.config.outSuffix;
-					this.setForeignObjectNotExists(foreignKey, {
-						type: "state",
-						common: {
-							name: this.config.outSuffix,
-							type: "string",
-							role: "state",
-							read: false,
-							write: true,
+					this.setForeignObject(
+						foreignKey,
+						{
+							type: "state",
+							common: {
+								name: this.config.outSuffix,
+								type: "string",
+								role: "state",
+								read: true,
+								write: true,
+							},
+							native: {},
 						},
-						native: {},
-					});
+						() => this.setForeignState(foreignKey, { val: JSON.stringify(obj), ack: false }),
+					);
+				} else {
+					this.setForeignState(foreignKey, { val: JSON.stringify(obj), ack: false });
 				}
-				this.setForeignState(foreignKey, { val: JSON.stringify(obj), ack: false });
 			}
 		} else {
-			this.log.info(`state ${id} deleted`);
+			this.log.debug(`state ${id} deleted`);
 		}
 	}
 }
