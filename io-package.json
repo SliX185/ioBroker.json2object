@@ -1,8 +1,21 @@
 {
 	"common": {
 		"name": "json2object",
-		"version": "1.0.1",
+		"version": "1.0.2",
 		"news": {
+			"1.0.2": {
+				"en": "correct yml-file for github actions",
+				"de": "korrigiere yml-datei für github actions",
+				"ru": "правильный yml-файл для действий github",
+				"pt": "corrigir yml-file para ações github",
+				"nl": "vertaling:",
+				"fr": "yml-file correct pour actions github",
+				"it": "corretto yml-file per le azioni github",
+				"es": "correcto yml-file para acciones de github",
+				"pl": "prawidłowy profil działania github",
+				"uk": "виправити yml-файл для github дії",
+				"zh-cn": "忠诚行动不对称"
+			},
 			"1.0.1": {
 				"en": "improve text in settings page",
 				"de": "Text in Einstellungen verbessert",
