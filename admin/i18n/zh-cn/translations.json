@@ -1,5 +1,4 @@
 {
-    "json2object adapter settings": "json2object的适配器设置",
-    "option1": "选项1",
-    "option2": "选项2"
+    "_input_keys_": "带有要转换的 json 的对象 ID（将在此适配器下转换为新对象，每个 json 参数都有状态）",
+    "_suffix_": "将更改后的状态写回 json 格式的后缀（例如，对于 mqtt2zigbee，它是 /device/set）"
 }

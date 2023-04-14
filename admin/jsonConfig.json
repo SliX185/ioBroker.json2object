@@ -4,7 +4,7 @@
 	"items": {
 		"inputKeys": {
 			"type": "table",
-			"label": "Object-IDs which contains JSON-Strings",
+			"label": "_input_keys_",
 			"sm": 12,
 			"md": 12,
 			"lg": 12,
@@ -21,7 +21,7 @@
 		},
 		"outSuffix": {
 			"type": "text",
-			"label": "suffix for writing json data",
+			"label": "_suffix_",
 			"newLine": true
 		}
 	}

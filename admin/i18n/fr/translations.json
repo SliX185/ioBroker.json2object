@@ -1,5 +1,4 @@
 {
-    "json2object adapter settings": "Paramètres d'adaptateur pour json2object",
-    "option1": "Option 1",
-    "option2": "Option 2"
+	"_input_keys_": "Identifiants d'objet avec les données JSON à convertir (seront convertis en un nouvel objet sous cet adaptateur avec des états pour chaque paramètre JSON)",
+	"_suffix_": "Suffixe pour écrire les états modifiés de nouveau au format JSON (par exemple, pour mqtt2zigbee, il s'agit de /device/set)"
 }

@@ -1,86 +1,83 @@
 {
-    "common": {
-        "name": "json2object",
-        "version": "0.0.1",
-        "news": {
-            "0.0.1": {
-                "en": "initial release",
-                "de": "Erstveröffentlichung",
-                "ru": "Начальная версия",
-                "pt": "lançamento inicial",
-                "nl": "Eerste uitgave",
-                "fr": "Première version",
-                "it": "Versione iniziale",
-                "es": "Versión inicial",
-                "pl": "Pierwsze wydanie",
-                "zh-cn": "首次出版"
-            }
-        },
-        "title": "JSON2Object",
-        "titleLang": {
-            "en": "JSON2Object",
-            "de": "JSON2Object",
-            "ru": "JSON2Объект",
-            "pt": "JSON2Object",
-            "nl": "JSON2Object",
-            "fr": "JSON2Object",
-            "it": "Oggetto JSON2",
-            "es": "JSON2Objeto",
-            "pl": "JSON2Object",
-            "zh-cn": "JSON2对象"
-        },
-        "desc": {
-            "en": "creates objects/states from json input attributes",
-            "de": "erstellt Objekte/Zustände aus json-Eingabeattributen",
-            "ru": "создает объекты/состояния из входных атрибутов json",
-            "pt": "cria objetos/estados de atributos de entrada json",
-            "nl": "maakt objecten/statussen van json-invoerattributen",
-            "fr": "crée des objets/états à partir des attributs d'entrée json",
-            "it": "crea oggetti/stati dagli attributi di input json",
-            "es": "crea objetos/estados a partir de atributos de entrada json",
-            "pl": "tworzy obiekty/stany z atrybutów wejściowych json",
-            "zh-cn": "从 json 输入属性创建对象/状态"
-        },
-        "authors": [
-            "dddev <ddev.info@gmail.com>"
-        ],
-        "keywords": [
-            "json",
-            "converter",
-            "parse",
-            "zigbee2mqtt"
-        ],
-        "license": "MIT",
-        "platform": "Javascript/Node.js",
-        "main": "main.js",
-        "icon": "json2object.png",
-        "enabled": true,
-        "extIcon": "https://raw.githubusercontent.com/DDD3v/ioBroker.json2object/master/admin/json2object.png",
-        "readme": "https://github.com/DDD3v/ioBroker.json2object/blob/master/README.md",
-        "loglevel": "info",
-        "mode": "daemon",
-        "type": "protocols",
-        "compact": true,
-        "connectionType": "local",
-        "dataSource": "push",
-        "adminUI": {
-            "config": "json"
-        },
-        "dependencies": [
-            {
-                "js-controller": ">=3.3.22"
-            }
-        ],
-        "globalDependencies": [
-            {
-                "admin": ">=5.1.13"
-            }
-        ]
-    },
-    "native": {
-        "inputKeys": [],
-        "outSuffix": "set"
-    },
-    "objects": [],
-    "instanceObjects": []
+	"common": {
+		"name": "json2object",
+		"version": "0.0.1",
+		"news": {
+			"0.0.1": {
+				"en": "initial release",
+				"de": "Erstveröffentlichung",
+				"ru": "Начальная версия",
+				"pt": "lançamento inicial",
+				"nl": "Eerste uitgave",
+				"fr": "Première version",
+				"it": "Versione iniziale",
+				"es": "Versión inicial",
+				"pl": "Pierwsze wydanie",
+				"zh-cn": "首次出版"
+			}
+		},
+		"title": "JSON2Object",
+		"titleLang": {
+			"en": "JSON2Object",
+			"de": "JSON2Object",
+			"ru": "JSON2Объект",
+			"pt": "JSON2Object",
+			"nl": "JSON2Object",
+			"fr": "JSON2Object",
+			"it": "Oggetto JSON2",
+			"es": "JSON2Objeto",
+			"pl": "JSON2Object",
+			"zh-cn": "JSON2对象"
+		},
+		"desc": {
+			"en": "Creates objects/states under this adapter from JSON data of other objects. Changes to these states can be written back in JSON format.",
+			"de": "erstellt Objekte/Zustände unter diesem Adapter aus JSON-Daten von anderen Objekten. Änderungen dieser Zustände können im JSON-Format zurückgeschrieben werden",
+			"ru": "Создает объекты / состояния под этим адаптером из данных JSON других объектов. Изменения этих состояний могут быть записаны обратно в формате JSON.",
+			"pt": "Cria objetos/estados sob este adaptador a partir de dados JSON de outros objetos. As alterações nesses estados podem ser escritas de volta no formato JSON.",
+			"nl": "Maakt objecten / toestanden onder deze adapter van JSON-gegevens van andere objecten. Wijzigingen aan deze toestanden kunnen worden teruggeschreven in JSON-indeling.",
+			"fr": "Crée des objets/états sous cet adaptateur à partir de données JSON d'autres objets. Les modifications apportées à ces états peuvent être écrites en retour au format JSON.",
+			"it": "Crea oggetti/stati sotto questo adattatore dai dati JSON di altri oggetti. Le modifiche a questi stati possono essere scritte di nuovo nel formato JSON.",
+			"es": "Crea objetos/estados bajo este adaptador a partir de datos JSON de otros objetos. Los cambios en estos estados se pueden escribir de nuevo en formato JSON.",
+			"pl": "Tworzy obiekty/stany pod tym adapterem z danych JSON innych obiektów. Zmiany w tych stanach mogą być zapisywane z powrotem w formacie JSON.",
+			"zh-cn": "从其他对象的JSON数据中在此适配器下创建对象/状态。这些状态的更改可以以JSON格式写回。"
+		},
+		"authors": ["dddev <ddev.info@gmail.com>"],
+		"keywords": ["json", "converter", "parse", "zigbee2mqtt"],
+		"license": "MIT",
+		"platform": "Javascript/Node.js",
+		"main": "main.js",
+		"icon": "json2object.png",
+		"enabled": true,
+		"extIcon": "https://raw.githubusercontent.com/DDD3v/ioBroker.json2object/master/admin/json2object.png",
+		"readme": "https://github.com/DDD3v/ioBroker.json2object/blob/master/README.md",
+		"loglevel": "info",
+		"mode": "daemon",
+		"type": "protocols",
+		"compact": true,
+		"connectionType": "local",
+		"dataSource": "push",
+		"adminUI": {
+			"config": "json"
+		},
+		"dependencies": [
+			{
+				"js-controller": ">=3.3.22"
+			}
+		],
+		"globalDependencies": [
+			{
+				"admin": ">=5.1.13"
+			}
+		]
+	},
+	"native": {
+		"inputKeys": [
+			{
+				"name": ""
+			}
+		],
+		"outSuffix": "set"
+	},
+	"objects": [],
+	"instanceObjects": []
 }

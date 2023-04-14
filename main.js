@@ -8,9 +8,6 @@
 // you need to create an adapter
 const utils = require("@iobroker/adapter-core");
 
-// Load your modules here, e.g.:
-// const fs = require("fs");
-
 class Json2object extends utils.Adapter {
 	/**
 	 * @param {Partial<utils.AdapterOptions>} [options={}]
@@ -22,8 +19,6 @@ class Json2object extends utils.Adapter {
 		});
 		this.on("ready", this.onReady.bind(this));
 		this.on("stateChange", this.onStateChange.bind(this));
-		// this.on("objectChange", this.onObjectChange.bind(this));
-		// this.on("message", this.onMessage.bind(this));
 		this.on("unload", this.onUnload.bind(this));
 		this.listOfNodes = [];
 	}
@@ -33,9 +28,6 @@ class Json2object extends utils.Adapter {
 	 */
 	async onReady() {
 		// Initialize your adapter here
-
-		// The adapters config (in the instance object everything under the attribute "native") is accessible via
-		// this.config:
 		this.log.debug("loading config ...");
 		// read input keys and subscribe
 		this.config.inputKeys?.forEach((value) => {
@@ -67,42 +59,12 @@ class Json2object extends utils.Adapter {
 	 */
 	onUnload(callback) {
 		try {
-			// Here you must clear all timeouts or intervals that may still be active
-			// clearTimeout(timeout1);
-			// clearTimeout(timeout2);
-			// ...
-			// clearInterval(interval1);
-
 			callback();
 		} catch (e) {
 			callback();
 		}
 	}
 
-	// If you need to react to object changes, uncomment the following block and the corresponding line in the constructor.
-	// You also need to subscribe to the objects with `this.subscribeObjects`, similar to `this.subscribeStates`.
-	// /**
-	//  * Is called if a subscribed object changes
-	//  * @param {string} id
-	//  * @param {ioBroker.Object | null | undefined} obj
-	//  */
-	// onObjectChange(id, obj) {
-	// 	if (obj) {
-	// 		// The object was changed
-	// 		this.log.info(`object ${id} changed: ${JSON.stringify(obj)}`);
-	// 	} else {
-	// 		// The object was deleted
-	// 		this.log.info(`object ${id} deleted`);
-	// 	}
-	// }
-
-	/*'number' | 'string' | 'boolean' | 'array' | 'object' | 'mixed' | 'file'
-	//  (err?: Error | null, obj?: { id: string })
-	/**
-	 * converts the value to the corresponding type
-	 * @param {string | number | boolean | null} val
-	 * @returns {'number' | 'string' | 'boolean' | 'array' | 'object' | 'mixed' | 'file'} the convertet value
-	 */
 	convertType(val) {
 		this.log.debug("type of " + typeof val);
 		switch (typeof val) {
@@ -128,17 +90,6 @@ class Json2object extends utils.Adapter {
 	 */
 	initObjectPath(id) {
 		const completeKey = `${this.name}.0.` + id;
-		/*
-		this.log.debug(`create object for: ` + completeKey);
-		this.extendForeignObjectAsync(completeKey, {
-			type: "folder",
-			common: {
-				name: completeKey,
-				role: "",
-			},
-			native: {},
-		});
-		*/
 		let currentPath = "";
 		for (const part of completeKey.split(".")) {
 			currentPath = currentPath ? currentPath + "." + part : part;
@@ -154,7 +105,7 @@ class Json2object extends utils.Adapter {
 		}
 	}
 	/**
-	 * Is called if to create and set the state
+	 * Is called to create object and set the state
 	 * @param {string} id
 	 * @param {string} val
 	 */
@@ -199,11 +150,6 @@ class Json2object extends utils.Adapter {
 		if (state) {
 			// The state was changed
 			this.log.debug(`state ${id} changed: ${state.val} (ack = ${state.ack})`);
-			/*
-			if (state.ack) {
-				return;
-			}
-			*/
 			const device = id.split(".").pop();
 			this.log.debug(`device: ${device}`);
 			if (this.listOfNodes?.includes(id) && state?.val) {
