@@ -4,7 +4,8 @@
 	"items": {
 		"inputKeys": {
 			"type": "table",
-			"label": "_input_keys_",
+			"label": "_input_keys_label_",
+			"help": "_input_keys_help_",
 			"sm": 12,
 			"md": 12,
 			"lg": 12,
@@ -21,7 +22,11 @@
 		},
 		"outSuffix": {
 			"type": "text",
-			"label": "_suffix_",
+			"label": "_suffix_label_",
+			"sm": 4,
+			"md": 4,
+			"lg": 4,
+			"help": "_suffix_help_",
 			"newLine": true
 		}
 	}

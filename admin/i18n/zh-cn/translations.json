@@ -1,4 +1,6 @@
 {
-    "_input_keys_": "带有要转换的 json 的对象 ID（将在此适配器下转换为新对象，每个 json 参数都有状态）",
-    "_suffix_": "将更改后的状态写回 json 格式的后缀（例如，对于 mqtt2zigbee，它是 /device/set）"
+    "_input_keys_label_": "添加对象 ID",
+    "_input_keys_help_": "带有要转换的 JSON 数据的对象 ID（将在此适配器下转换为一个新对象，每个 JSON 参数都有状态）",
+    "_suffix_label_": "写入更改状态的后缀",
+    "_suffix_help_": "将更改后的状态写回 JSON 格式的后缀（例如，对于 mqtt2zigbee，这是“set”（/device/set））"
 }
