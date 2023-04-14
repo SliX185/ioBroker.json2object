@@ -1,6 +1,6 @@
 {
   "name": "iobroker.json2object",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "creates objects/states from json input attributes",
   "author": {
     "name": "dddev",
