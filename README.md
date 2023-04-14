@@ -21,6 +21,11 @@ This adapter creates objects/states from JSON data of other objects. Any changes
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+
+### **WORK IN PROGRESS**
+
+-   (dddev) correct yml-file for github actions
+
 ### 1.0.1 (2023-04-14)
 
 -   (dddev) improve text in settings page
