@@ -2,5 +2,7 @@
     "_input_keys_label_": "Dodaj identyfikatory obiektów",
     "_input_keys_help_": "Identyfikatory obiektów z danymi JSON do przekonwertowania (zostaną przekonwertowane na nowy obiekt w tym adapterze ze stanami dla każdego parametru JSON)",
     "_suffix_label_": "Sufiks do zapisu zmienionych stanów",
-    "_suffix_help_": "Sufiks do zapisu zmienionych stanów z powrotem do formatu JSON (np. dla mqtt2zigbee jest to 'set' (/device/set))"
+    "_suffix_help_": "Sufiks do zapisu zmienionych stanów z powrotem do formatu JSON (np. dla mqtt2zigbee jest to 'set' (/device/set))",
+    "_en_write_back_label_": "Włącz odpisywanie",
+    "_en_write_back_help_": "Jeśli ta opcja jest włączona, zmiany stanów tego adaptera zostaną zapisane z powrotem w odpowiednim obiekcie źródłowym w formacie JSON (opcjonalnie z sufiksem, aby nie zastępować oryginalnego obiektu)."
 }

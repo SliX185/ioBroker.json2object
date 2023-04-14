@@ -21,6 +21,7 @@ class Json2object extends utils.Adapter {
 		this.on("stateChange", this.onStateChange.bind(this));
 		this.on("unload", this.onUnload.bind(this));
 		this.listOfNodes = [];
+		this.listOfSubscribtions = [];
 	}
 
 	/**
@@ -29,12 +30,14 @@ class Json2object extends utils.Adapter {
 	async onReady() {
 		// Initialize your adapter here
 		this.log.debug("loading config ...");
+		this.log.debug(`subscribe to ${this.config.enWriteBack}`);
+		this.unsubscribeForeignStates("*");
 		// read input keys and subscribe
 		this.config.inputKeys?.forEach((value) => {
 			this.log.debug(value.name);
 			if (value.name) {
 				this.listOfNodes.push(value.name);
-				this.log.debug(`subscripe to ${value.name}`);
+				this.log.debug(`subscribe to ${value.name}`);
 				this.subscribeForeignStates(value.name);
 				this.getForeignState(value.name, (err, state) => {
 					if (err) {
@@ -42,15 +45,13 @@ class Json2object extends utils.Adapter {
 					} else {
 						this.log.debug("get state: " + state?.val);
 						if (state?.val) {
-							//this.initObjectPath(value.name);
-							this.createObjectAndState(value.name, String(state.val));
+							this.initObjectPath(value.name);
+							this.createObjectAndState(value.name, String(state.val), this.config.enWriteBack);
 						}
 					}
 				});
 			}
 		});
-		/* subscripe to internal states */
-		this.subscribeStates("*");
 	}
 
 	/**
@@ -59,6 +60,7 @@ class Json2object extends utils.Adapter {
 	 */
 	onUnload(callback) {
 		try {
+			this.log.debug("unload adapter...");
 			callback();
 		} catch (e) {
 			callback();
@@ -89,13 +91,15 @@ class Json2object extends utils.Adapter {
 	 * Is called to initialize the objects for id
 	 */
 	initObjectPath(id) {
-		const completeKey = `${this.name}.0.` + id;
+		const prefix = `${this.name}.0.`;
 		let currentPath = "";
-		for (const part of completeKey.split(".")) {
+		for (const part of id.split(".")) {
+			const objectType = currentPath ? "channel" : "device";
 			currentPath = currentPath ? currentPath + "." + part : part;
-			this.log.debug(`init object for: ` + currentPath);
-			this.setObject(currentPath, {
-				type: "folder",
+
+			this.log.debug(`init object for: ` + currentPath + " with type: " + objectType);
+			this.setObject(prefix + currentPath, {
+				type: objectType,
 				common: {
 					name: part,
 					role: "",
@@ -108,8 +112,9 @@ class Json2object extends utils.Adapter {
 	 * Is called to create object and set the state
 	 * @param {string} id
 	 * @param {string} val
+	 * @param {boolean} subscribe
 	 */
-	createObjectAndState(id, val) {
+	createObjectAndState(id, val, subscribe) {
 		let obj;
 		try {
 			obj = JSON.parse(val);
@@ -133,11 +138,18 @@ class Json2object extends utils.Adapter {
 					},
 					native: {},
 				},
-				() =>
-					this.setState(id + "." + key, {
+				() => {
+					const fullKey = id + "." + key;
+					this.setState(fullKey, {
 						val: typeof value === "object" ? JSON.stringify(value) : value,
 						ack: true,
-					}),
+					});
+					if (subscribe && !this.listOfSubscribtions.includes(fullKey)) {
+						this.log.debug(`subscripe for: ` + fullKey);
+						this.subscribeStates(fullKey);
+						this.listOfSubscribtions.push(fullKey);
+					}
+				},
 			);
 		}
 	}
@@ -153,7 +165,7 @@ class Json2object extends utils.Adapter {
 			const device = id.split(".").pop();
 			this.log.debug(`device: ${device}`);
 			if (this.listOfNodes?.includes(id) && state?.val) {
-				this.createObjectAndState(id, String(state.val));
+				this.createObjectAndState(id, String(state.val), this.config.enWriteBack);
 			} else {
 				/* if ack is true, the change cames from our self */
 				if (state.ack) {

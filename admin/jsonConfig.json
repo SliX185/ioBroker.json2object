@@ -20,6 +20,15 @@
 			],
 			"newLine": true
 		},
+		"enWriteBack": {
+			"type": "checkbox",
+			"label": "_en_write_back_label_",
+			"sm": 4,
+			"md": 4,
+			"lg": 4,
+			"help": "_en_write_back_help_",
+			"newLine": true
+		},
 		"outSuffix": {
 			"type": "text",
 			"label": "_suffix_label_",
@@ -27,7 +36,7 @@
 			"md": 4,
 			"lg": 4,
 			"help": "_suffix_help_",
-			"newLine": true
+			"hidden": "data.enWriteBack!==true"
 		}
 	}
 }

@@ -2,5 +2,7 @@
     "_input_keys_label_": "Voeg object-ID's toe",
     "_input_keys_help_": "Object-ID's met de JSON-gegevens die moeten worden geconverteerd (worden geconverteerd naar een nieuw object onder deze adapter met statussen voor elke JSON-parameter)",
     "_suffix_label_": "Achtervoegsel voor het schrijven van gewijzigde toestanden",
-    "_suffix_help_": "Achtervoegsel voor het terugschrijven van gewijzigde toestanden naar JSON-indeling (bijvoorbeeld voor mqtt2zigbee is dit 'set' (/device/set))"
+    "_suffix_help_": "Achtervoegsel voor het terugschrijven van gewijzigde toestanden naar JSON-indeling (bijvoorbeeld voor mqtt2zigbee is dit 'set' (/device/set))",
+    "_en_write_back_label_": "Schakel terugschrijven in",
+    "_en_write_back_help_": "Als deze optie is ingeschakeld, worden wijzigingen in de status van deze adapter teruggeschreven naar het overeenkomstige bronobject in JSON-indeling (optioneel met een achtervoegsel om het oorspronkelijke object niet te overschrijven)."
 }

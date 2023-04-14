@@ -2,5 +2,7 @@
     "_input_keys_label_": "Agregar ID de objeto",
     "_input_keys_help_": "Id. de objetos con los datos JSON que se convertirán (se convertirán en un nuevo objeto bajo este adaptador con estados para cada parámetro JSON)",
     "_suffix_label_": "Sufijo para escribir estados cambiados",
-    "_suffix_help_": "Sufijo para volver a escribir estados modificados en formato JSON (por ejemplo, para mqtt2zigbee, esto es 'establecer' (/dispositivo/conjunto))"
+    "_suffix_help_": "Sufijo para volver a escribir estados modificados en formato JSON (por ejemplo, para mqtt2zigbee, esto es 'establecer' (/dispositivo/conjunto))",
+    "_en_write_back_label_": "Habilitar reescritura",
+    "_en_write_back_help_": "Si esta opción está habilitada, los cambios en los estados de este adaptador se volverán a escribir en el objeto de origen correspondiente en formato JSON (opcionalmente con un sufijo para no sobrescribir el objeto original)."
 }

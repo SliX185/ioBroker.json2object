@@ -1,6 +1,8 @@
 {
 	"_input_keys_label_": "Add object IDs",
 	"_input_keys_help_": "Object IDs with the JSON data to be converted (will be converted into a new object under this adapter with states for every JSON parameter)",
+	"_en_write_back_label_": "Enable write back",
+	"_en_write_back_help_": "If this option is enabled, changes to the states of this adapter will be written back to the corresponding source object in JSON format (optionally with a suffix to not overwrite the original object).",
 	"_suffix_label_": "Suffix for writing changed states",
 	"_suffix_help_": "Suffix for writing changed states back to JSON format (e.g. for mqtt2zigbee, this is 'set' (/device/set))"
 }

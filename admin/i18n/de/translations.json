@@ -1,6 +1,8 @@
 {
-    "_input_keys_label_": "Objekt-IDs hinzufügen",
-    "_input_keys_help_": "Objekt-IDs mit den JSON-Daten, die konvertiert werden sollen (werden unter diesem Adapter in ein neues Objekt mit Zuständen für jeden JSON-Parameter konvertiert)",
-    "_suffix_label_": "Suffix für das Schreiben von geänderten Zuständen",
-    "_suffix_help_": "Suffix für das Schreiben von geänderten Zuständen zurück in das JSON-Format (z.B. für mqtt2zigbee lautet dieser 'set' (/device/set))"
+	"_input_keys_label_": "Objekt-IDs hinzufügen",
+	"_input_keys_help_": "Objekt-IDs mit den JSON-Daten, die konvertiert werden sollen (werden unter diesem Adapter in ein neues Objekt mit Zuständen für jeden JSON-Parameter konvertiert)",
+	"_en_write_back_label_": "Rückschreiben aktivieren",
+	"_en_write_back_help_": "Wenn diese Option aktiviert ist, werden Änderungen an den Zuständes dieses Adapters auf das entsprechende Urspungsobjekt im JSON-Format zurückgeschrieben (ggf. mit einem suffix, um das original Objekt nicht zu überschreiben)",
+	"_suffix_label_": "Suffix für das Schreiben von geänderten Zuständen",
+	"_suffix_help_": "Suffix für das Schreiben von geänderten Zuständen zurück in das JSON-Format (z.B. für mqtt2zigbee lautet dieser 'set' (/device/set))"
 }
