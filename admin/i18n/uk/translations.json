@@ -1,0 +1,4 @@
+{
+	"_input_keys_": "Object-IDs with the json-data to convert (will converted into new object under this adapter with states for every json-parameter)",
+	"_suffix_": "suffix for writing changed states back to json-format (e.g. for mqtt2zigbee it is /device/set)"
+}
