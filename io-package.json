@@ -1,8 +1,21 @@
 {
 	"common": {
 		"name": "json2object",
-		"version": "1.0.2",
+		"version": "1.1.0",
 		"news": {
+			"1.1.0": {
+				"en": "improve subscribing and folder structur\nmake 'write back' of state-changes optional",
+				"de": "Verbesserung der Registrierung von Zuständen und Ordnerstrukturen\n'Zurückschreiben' von Zustandänderung optional",
+				"ru": "улучшить подписку и папку structur\nсделать «напишите назад» государственных изменений необязательно",
+				"pt": "melhorar a subscrição e estrutura de pasta\nfazer 'regrar de volta' de mudanças de estado opcional",
+				"nl": "verbeter subscrib en folder structur\nschrijf terug van de staat verandert optie",
+				"fr": "améliorer la souscription et la structuration du dossier\nfaire 'écrire les changements d'état' optionnel",
+				"it": "migliorare la sottoscrizione e la struttura della cartella\nfare 'scrittura indietro' dei cambiamenti di stato facoltativo",
+				"es": "mejorar la suscripción y estructura de carpetas\nhacer 'escribir de nuevo' de cambios estatales opcional",
+				"pl": "ulepszenie subskrypcji i folderów\n\"przepisanie\" zmian państwowych, opcjonalnie opcjonalnych",
+				"uk": "покращувати структурування папок та папок\nвнести 'write back' державного значення",
+				"zh-cn": "改进辅助和手工艺\n改变国家选择"
+			},
 			"1.0.2": {
 				"en": "correct yml-file for github actions",
 				"de": "korrigiere yml-datei für github actions",
