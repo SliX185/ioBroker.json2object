@@ -1,138 +1,158 @@
 {
-	"common": {
-		"name": "json2object",
-		"version": "1.1.0",
-		"news": {
-			"1.1.0": {
-				"en": "improve subscribing and folder structur\nmake 'write back' of state-changes optional",
-				"de": "Verbesserung der Registrierung von Zuständen und Ordnerstrukturen\n'Zurückschreiben' von Zustandänderung optional",
-				"ru": "улучшить подписку и папку structur\nсделать «напишите назад» государственных изменений необязательно",
-				"pt": "melhorar a subscrição e estrutura de pasta\nfazer 'regrar de volta' de mudanças de estado opcional",
-				"nl": "verbeter subscrib en folder structur\nschrijf terug van de staat verandert optie",
-				"fr": "améliorer la souscription et la structuration du dossier\nfaire 'écrire les changements d'état' optionnel",
-				"it": "migliorare la sottoscrizione e la struttura della cartella\nfare 'scrittura indietro' dei cambiamenti di stato facoltativo",
-				"es": "mejorar la suscripción y estructura de carpetas\nhacer 'escribir de nuevo' de cambios estatales opcional",
-				"pl": "ulepszenie subskrypcji i folderów\n\"przepisanie\" zmian państwowych, opcjonalnie opcjonalnych",
-				"uk": "покращувати структурування папок та папок\nвнести 'write back' державного значення",
-				"zh-cn": "改进辅助和手工艺\n改变国家选择"
-			},
-			"1.0.2": {
-				"en": "correct yml-file for github actions",
-				"de": "korrigiere yml-datei für github actions",
-				"ru": "правильный yml-файл для действий github",
-				"pt": "corrigir yml-file para ações github",
-				"nl": "vertaling:",
-				"fr": "yml-file correct pour actions github",
-				"it": "corretto yml-file per le azioni github",
-				"es": "correcto yml-file para acciones de github",
-				"pl": "prawidłowy profil działania github",
-				"uk": "виправити yml-файл для github дії",
-				"zh-cn": "忠诚行动不对称"
-			},
-			"1.0.1": {
-				"en": "improve text in settings page",
-				"de": "Text in Einstellungen verbessert",
-				"ru": "улучшить текст на странице настроек",
-				"pt": "melhorar o texto na página de configurações",
-				"nl": "verbeter de tekst in de setting pagina",
-				"fr": "améliorer le texte dans la page paramètres",
-				"it": "migliorare il testo nella pagina delle impostazioni",
-				"es": "mejorar el texto en la página de configuración",
-				"pl": "poprawić tekst w ustawionej stronie",
-				"uk": "поліпшення тексту на сторінці налаштувань",
-				"zh-cn": "改进环境页页案文"
-			},
-			"1.0.0": {
-				"en": "initial release",
-				"de": "erste Veröffentlichung",
-				"ru": "начальный выпуск",
-				"pt": "lançamento inicial",
-				"nl": "niet",
-				"fr": "initial release",
-				"it": "rilascio iniziale",
-				"es": "liberación inicial",
-				"pl": "pierwsze wydanie",
-				"uk": "початковий реліз",
-				"zh-cn": "初步释放"
-			},
-			"0.0.1": {
-				"en": "initial test",
-				"de": "erster test",
-				"ru": "Начальная версия",
-				"pt": "lançamento inicial",
-				"nl": "Eerste uitgave",
-				"fr": "Première version",
-				"it": "Versione iniziale",
-				"es": "Versión inicial",
-				"pl": "Pierwsze wydanie",
-				"uk": "initial release",
-				"zh-cn": "首次出版"
-			}
-		},
-		"titleLang": {
-			"en": "JSON2Object",
-			"de": "JSON2Object",
-			"ru": "JSON2Объект",
-			"pt": "JSON2Object",
-			"nl": "JSON2Object",
-			"fr": "JSON2Object",
-			"it": "JSON2Object",
-			"es": "JSON2Objeto",
-			"pl": "JSON2Object",
-			"uk": "JSON2Object",
-			"zh-cn": "JSON2Object"
-		},
-		"desc": {
-			"en": "creates objects/states under this adapter from JSON data of other objects. Changes to these states can be written back in JSON format.",
-			"de": "erstellt Objekte/Zustände unter diesem Adapter aus JSON-Daten von anderen Objekten. Änderungen dieser Zustände können im JSON-Format zurückgeschrieben werden",
-			"ru": "cоздает объекты / состояния под этим адаптером из данных JSON других объектов. Изменения этих состояний могут быть записаны обратно в формате JSON.",
-			"pt": "cria objetos/estados sob este adaptador a partir de dados JSON de outros objetos. As alterações nesses estados podem ser escritas de volta no formato JSON.",
-			"nl": "maakt objecten / toestanden onder deze adapter van JSON-gegevens van andere objecten. Wijzigingen aan deze toestanden kunnen worden teruggeschreven in JSON-indeling.",
-			"fr": "crée des objets/états sous cet adaptateur à partir de données JSON d'autres objets. Les modifications apportées à ces états peuvent être écrites en retour au format JSON.",
-			"it": "crea oggetti/stati sotto questo adattatore dai dati JSON di altri oggetti. Le modifiche a questi stati possono essere scritte di nuovo nel formato JSON.",
-			"es": "crea objetos/estados bajo este adaptador a partir de datos JSON de otros objetos. Los cambios en estos estados se pueden escribir de nuevo en formato JSON.",
-			"pl": "tworzy obiekty/stany pod tym adapterem z danych JSON innych obiektów. Zmiany w tych stanach mogą być zapisywane z powrotem w formacie JSON.",
-			"uk": "creates objects/states under this adapter from JSON data of other objects. Changes to these states can be written back in JSON format.",
-			"zh-cn": "从其他对象的JSON数据中在此适配器下创建对象/状态。这些状态的更改可以以JSON格式写回。"
-		},
-		"authors": ["dddev <ddev.info@gmail.com>"],
-		"keywords": ["json", "converter", "parse", "zigbee2mqtt"],
-		"license": "MIT",
-		"platform": "Javascript/Node.js",
-		"main": "main.js",
-		"icon": "json2object.png",
-		"enabled": true,
-		"extIcon": "https://raw.githubusercontent.com/DDD3v/ioBroker.json2object/master/admin/json2object.png",
-		"readme": "https://github.com/DDD3v/ioBroker.json2object/blob/master/README.md",
-		"loglevel": "info",
-		"mode": "daemon",
-		"type": "protocols",
-		"compact": true,
-		"connectionType": "local",
-		"dataSource": "push",
-		"adminUI": {
-			"config": "json"
-		},
-		"dependencies": [
-			{
-				"js-controller": ">=3.3.22"
-			}
-		],
-		"globalDependencies": [
-			{
-				"admin": ">=5.1.13"
-			}
-		]
-	},
-	"native": {
-		"inputKeys": [
-			{
-				"name": ""
-			}
-		],
-		"enWriteBack": true,
-		"outSuffix": "set"
-	},
-	"objects": [],
-	"instanceObjects": []
+  "common": {
+    "name": "json2object",
+    "version": "1.1.1",
+    "news": {
+      "1.1.1": {
+        "en": "add translation for uk",
+        "de": "übersetzung hinzufügen für uk",
+        "ru": "добавить перевод для uk",
+        "pt": "adicionar tradução para uk",
+        "nl": "vertaling:",
+        "fr": "ajouter la traduction pour uk",
+        "it": "aggiungere la traduzione per uk",
+        "es": "añadir traducción para uk",
+        "pl": "tłumaczenie na język uk",
+        "uk": "додати переклад для uk",
+        "zh-cn": "增 编"
+      },
+      "1.1.0": {
+        "en": "improve subscribing and folder structur\nmake 'write back' of state-changes optional",
+        "de": "Verbesserung der Registrierung von Zuständen und Ordnerstrukturen\n'Zurückschreiben' von Zustandänderung optional",
+        "ru": "улучшить подписку и папку structur\nсделать «напишите назад» государственных изменений необязательно",
+        "pt": "melhorar a subscrição e estrutura de pasta\nfazer 'regrar de volta' de mudanças de estado opcional",
+        "nl": "verbeter subscrib en folder structur\nschrijf terug van de staat verandert optie",
+        "fr": "améliorer la souscription et la structuration du dossier\nfaire 'écrire les changements d'état' optionnel",
+        "it": "migliorare la sottoscrizione e la struttura della cartella\nfare 'scrittura indietro' dei cambiamenti di stato facoltativo",
+        "es": "mejorar la suscripción y estructura de carpetas\nhacer 'escribir de nuevo' de cambios estatales opcional",
+        "pl": "ulepszenie subskrypcji i folderów\n\"przepisanie\" zmian państwowych, opcjonalnie opcjonalnych",
+        "uk": "покращувати структурування папок та папок\nвнести 'write back' державного значення",
+        "zh-cn": "改进辅助和手工艺\n改变国家选择"
+      },
+      "1.0.2": {
+        "en": "correct yml-file for github actions",
+        "de": "korrigiere yml-datei für github actions",
+        "ru": "правильный yml-файл для действий github",
+        "pt": "corrigir yml-file para ações github",
+        "nl": "vertaling:",
+        "fr": "yml-file correct pour actions github",
+        "it": "corretto yml-file per le azioni github",
+        "es": "correcto yml-file para acciones de github",
+        "pl": "prawidłowy profil działania github",
+        "uk": "виправити yml-файл для github дії",
+        "zh-cn": "忠诚行动不对称"
+      },
+      "1.0.1": {
+        "en": "improve text in settings page",
+        "de": "Text in Einstellungen verbessert",
+        "ru": "улучшить текст на странице настроек",
+        "pt": "melhorar o texto na página de configurações",
+        "nl": "verbeter de tekst in de setting pagina",
+        "fr": "améliorer le texte dans la page paramètres",
+        "it": "migliorare il testo nella pagina delle impostazioni",
+        "es": "mejorar el texto en la página de configuración",
+        "pl": "poprawić tekst w ustawionej stronie",
+        "uk": "поліпшення тексту на сторінці налаштувань",
+        "zh-cn": "改进环境页页案文"
+      },
+      "1.0.0": {
+        "en": "initial release",
+        "de": "erste Veröffentlichung",
+        "ru": "начальный выпуск",
+        "pt": "lançamento inicial",
+        "nl": "niet",
+        "fr": "initial release",
+        "it": "rilascio iniziale",
+        "es": "liberación inicial",
+        "pl": "pierwsze wydanie",
+        "uk": "початковий реліз",
+        "zh-cn": "初步释放"
+      },
+      "0.0.1": {
+        "en": "initial test",
+        "de": "erster test",
+        "ru": "Начальная версия",
+        "pt": "lançamento inicial",
+        "nl": "Eerste uitgave",
+        "fr": "Première version",
+        "it": "Versione iniziale",
+        "es": "Versión inicial",
+        "pl": "Pierwsze wydanie",
+        "uk": "initial release",
+        "zh-cn": "首次出版"
+      }
+    },
+    "titleLang": {
+      "en": "JSON2Object",
+      "de": "JSON2Object",
+      "ru": "JSON2Объект",
+      "pt": "JSON2Object",
+      "nl": "JSON2Object",
+      "fr": "JSON2Object",
+      "it": "JSON2Object",
+      "es": "JSON2Objeto",
+      "pl": "JSON2Object",
+      "uk": "JSON2Object",
+      "zh-cn": "JSON2Object"
+    },
+    "desc": {
+      "en": "creates objects/states under this adapter from JSON data of other objects. Changes to these states can be written back in JSON format.",
+      "de": "erstellt Objekte/Zustände unter diesem Adapter aus JSON-Daten von anderen Objekten. Änderungen dieser Zustände können im JSON-Format zurückgeschrieben werden",
+      "ru": "cоздает объекты / состояния под этим адаптером из данных JSON других объектов. Изменения этих состояний могут быть записаны обратно в формате JSON.",
+      "pt": "cria objetos/estados sob este adaptador a partir de dados JSON de outros objetos. As alterações nesses estados podem ser escritas de volta no formato JSON.",
+      "nl": "maakt objecten / toestanden onder deze adapter van JSON-gegevens van andere objecten. Wijzigingen aan deze toestanden kunnen worden teruggeschreven in JSON-indeling.",
+      "fr": "crée des objets/états sous cet adaptateur à partir de données JSON d'autres objets. Les modifications apportées à ces états peuvent être écrites en retour au format JSON.",
+      "it": "crea oggetti/stati sotto questo adattatore dai dati JSON di altri oggetti. Le modifiche a questi stati possono essere scritte di nuovo nel formato JSON.",
+      "es": "crea objetos/estados bajo este adaptador a partir de datos JSON de otros objetos. Los cambios en estos estados se pueden escribir de nuevo en formato JSON.",
+      "pl": "tworzy obiekty/stany pod tym adapterem z danych JSON innych obiektów. Zmiany w tych stanach mogą być zapisywane z powrotem w formacie JSON.",
+      "uk": "creates objects/states under this adapter from JSON data of other objects. Changes to these states can be written back in JSON format.",
+      "zh-cn": "从其他对象的JSON数据中在此适配器下创建对象/状态。这些状态的更改可以以JSON格式写回。"
+    },
+    "authors": [
+      "dddev <ddev.info@gmail.com>"
+    ],
+    "keywords": [
+      "json",
+      "converter",
+      "parse",
+      "zigbee2mqtt"
+    ],
+    "license": "MIT",
+    "platform": "Javascript/Node.js",
+    "main": "main.js",
+    "icon": "json2object.png",
+    "enabled": true,
+    "extIcon": "https://raw.githubusercontent.com/DDD3v/ioBroker.json2object/master/admin/json2object.png",
+    "readme": "https://github.com/DDD3v/ioBroker.json2object/blob/master/README.md",
+    "loglevel": "info",
+    "mode": "daemon",
+    "type": "protocols",
+    "compact": true,
+    "connectionType": "local",
+    "dataSource": "push",
+    "adminUI": {
+      "config": "json"
+    },
+    "dependencies": [
+      {
+        "js-controller": ">=3.3.22"
+      }
+    ],
+    "globalDependencies": [
+      {
+        "admin": ">=5.1.13"
+      }
+    ]
+  },
+  "native": {
+    "inputKeys": [
+      {
+        "name": ""
+      }
+    ],
+    "enWriteBack": true,
+    "outSuffix": "set"
+  },
+  "objects": [],
+  "instanceObjects": []
 }
