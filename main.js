@@ -108,51 +108,77 @@ class Json2object extends utils.Adapter {
 			});
 		}
 	}
-	/**
-	 * Is called to create object and set the state
-	 * @param {string} id
-	 * @param {string} val
-	 * @param {boolean} subscribe
-	 */
-	createObjectAndState(id, val, subscribe) {
-		let obj;
-		try {
-			obj = JSON.parse(val);
-		} catch (e) {
-			this.log.warn(`invalid json format on: ${id} detected: ` + val);
-			return;
-		}
-		for (const [key, value] of Object.entries(obj)) {
-			const completeKey = `${this.name}.0.` + id;
-			this.log.debug(`create object for: ` + completeKey + "." + key);
-			this.setObject(
-				completeKey + "." + key,
-				{
-					type: "state",
-					common: {
-						name: key,
-						role: "state",
-						read: true,
-						write: true,
-						type: this.convertType(value),
-					},
-					native: {},
-				},
-				() => {
-					const fullKey = id + "." + key;
-					this.setState(fullKey, {
-						val: typeof value === "object" ? JSON.stringify(value) : value,
-						ack: true,
-					});
-					if (subscribe && !this.listOfSubscribtions.includes(fullKey)) {
-						this.log.debug(`subscripe for: ` + fullKey);
-						this.subscribeStates(fullKey);
-						this.listOfSubscribtions.push(fullKey);
-					}
-				},
-			);
-		}
-	}
+  /**
+   * Is called to create object and set the state
+   * @param {string} id
+   * @param {string|object} val
+   * @param {boolean} subscribe
+   */
+  createObjectAndState(id, val, subscribe) {
+    let obj;
+    if (typeof val === "string") {
+      try {
+        obj = JSON.parse(val);
+      } catch (e) {
+        this.log.warn(`invalid json format on: ${id} detected: ` + val);
+        return;
+      }
+    } else {
+      obj = val;
+    }
+
+    for (const [key, value] of Object.entries(obj)) {
+      const completeKey = `${this.name}.0.` + id + "." + key;
+      const fullKey = id + "." + key;
+
+      if (value !== null && typeof value === "object" && !Array.isArray(value)) {
+        // Go deeper recursively for nested objects
+        this.log.debug(`recursing into object: ${fullKey}`);
+        this.setObject(
+          completeKey,
+          {
+            type: "channel",
+            common: {
+              name: key,
+              role: "folder",
+            },
+            native: {},
+          },
+          () => {
+            this.createObjectAndState(fullKey, value, subscribe);
+          },
+        );
+      } else {
+        // Simple value: Create state
+        this.log.debug(`create state: ${fullKey} = ${value}`);
+        this.setObject(
+          completeKey,
+          {
+            type: "state",
+            common: {
+              name: key,
+              role: "state",
+              read: true,
+              write: true,
+              type: this.convertType(value),
+            },
+            native: {},
+          },
+          () => {
+            this.setState(fullKey, {
+              val: value,
+              ack: true,
+            });
+            if (subscribe && !this.listOfSubscribtions.includes(fullKey)) {
+              this.log.debug(`subscribe for: ` + fullKey);
+              this.subscribeStates(fullKey);
+              this.listOfSubscribtions.push(fullKey);
+            }
+          },
+        );
+      }
+    }
+  }
 	/**
 	 * Is called if a subscribed state changes
 	 * @param {string} id
