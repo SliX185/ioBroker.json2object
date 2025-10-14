@@ -132,7 +132,7 @@ class Json2object extends utils.Adapter {
       const fullKey = id + "." + key;
 
       if (value !== null && typeof value === "object" && !Array.isArray(value)) {
-        // → Rekursiv tiefer gehen für verschachtelte Objekte
+        // Go deeper recursively for nested objects
         this.log.debug(`recursing into object: ${fullKey}`);
         this.setObject(
           completeKey,
@@ -149,7 +149,7 @@ class Json2object extends utils.Adapter {
           },
         );
       } else {
-        // → einfacher Wert: State anlegen
+        // Simple value: Create state
         this.log.debug(`create state: ${fullKey} = ${value}`);
         this.setObject(
           completeKey,
