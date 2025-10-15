@@ -165,10 +165,10 @@ class Json2object extends utils.Adapter {
             native: {},
           },
           () => {
-            this.setState(fullKey, {
-              val: value,
-              ack: true,
-            });
+			this.setState(fullKey, { 
+			  val: (typeof value === "object" ? JSON.stringify(value) : value), 
+			  ack: true 
+			});
             if (subscribe && !this.listOfSubscribtions.includes(fullKey)) {
               this.log.debug(`subscribe for: ` + fullKey);
               this.subscribeStates(fullKey);
